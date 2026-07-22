@@ -3,9 +3,11 @@ def call(Map config) {
         agent any
 
         stages {
+
             stage('Build') {
                 steps {
                     echo "Building ${config.appName}"
+
                     sh '''
                         ls -la
                         test -f index.html
@@ -28,12 +30,17 @@ def call(Map config) {
 
             stage('Deploy') {
                 steps {
-                    echo "Deploying ${config.appName}"
-                    sh '''
-                        sudo cp index.html /var/www/html/
-                        sudo cp style.css /var/www/html/
-                        sudo cp script.js /var/www/html/
-                    '''
+                    sh """
+                        echo "Deploying ${config.appName}"
+
+                        sudo mkdir -p /var/www/html/${config.appName}
+
+                        sudo cp index.html /var/www/html/${config.appName}/
+                        sudo cp style.css /var/www/html/${config.appName}/
+                        sudo cp script.js /var/www/html/${config.appName}/
+
+                        echo "Deployment completed"
+                    """
                 }
             }
         }
