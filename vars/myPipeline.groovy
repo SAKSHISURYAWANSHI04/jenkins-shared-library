@@ -3,9 +3,11 @@ def call(Map config) {
         agent any
 
         stages {
+
             stage('Build') {
                 steps {
                     echo "Building ${config.appName}"
+                    sh 'ls -la'
                 }
             }
 
