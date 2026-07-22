@@ -25,11 +25,16 @@ def call(Map config) {
                     echo "Scanning ${config.appName}"
                 }
             }
-
-            stage('Deploy') {
-                steps {
-                    echo "Deploying ${config.appName}"
-                }
+stage('Deploy') {
+    steps {
+        echo "Deploying ${config.appName}"
+        sh '''
+            sudo cp index.html /var/www/html/
+            sudo cp style.css /var/www/html/
+            sudo cp script.js /var/www/html/
+        '''
+    }
+}
             }
         }
     }
